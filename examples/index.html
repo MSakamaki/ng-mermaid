@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ngmermaid</title>
+    <link rel="stylesheet" href="./lib/angular/angular-csp.css" type="text/css" />
+    <style></style>
+</head>
+<body ng-app="exampleapp">
+    <section>
+        <h1>Yo ngmermaid !</h1>
+        <p>1+1= {{ 1+1 }}
+        <!-- div ng-cloak data-ng-cloak x-ng-cloak ng-hideloak>
+        </div -->
+
+        <div ng-controller="ctrls">
+            <textarea ng-model="mymodel" style="width:100%;" rows="10"></textarea> 
+            <ng-mermaid nm-model="mymodel" ></ng-mermaid>
+        </div>
+
+        <div>
+            <ng-mermaid>
+graph TD; A-->B; A-->C; B-->D; C-->D;
+            </ng-mermaid>
+        </div>
+
+        <div>
+            <ng-mermaid>
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->John: Hello John, how are you?
+    loop Healthcheck
+        John->John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail...
+    John-->Alice: Great!
+    John->Bob: How about you?
+    Bob-->John: Jolly good!
+            </ng-mermaid>
+        </div>
+
+    </section>
+
+    <script src="./lib/angular/angular.js"></script>
+    <script src="./lib/mermaid/dist/mermaid.full.js"></script>
+    <script src="./lib/angular-sanitize/angular-sanitize.js"></script>
+    <script>
+        'use strict';
+        var myApp = angular.module('exampleapp',['ngMermaid','ngSanitize']);
+        myApp.controller('ctrls', ['$scope', function($scope) {
+            $scope.mymodel ='graph TD;\n  S-->B;\n  S-->C;\n  B-->D;\n  C-->D;';
+        }]);
+    </script>
+    <script src="./ngmermaid.js"></script>
+    <script src="//localhost:9001/livereload.js"></script>
+</body>
+</html>
