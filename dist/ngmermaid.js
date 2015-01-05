@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ngMermaid',['ngSanitize'])
-  .directive('ngMermaid', function ($sce, $timeout) {
+  .directive('ngMermaid', ['$sce','$timeout', function ($sce, $timeout) {
     //alert('init ngmermaid');
     var cssReplace = function(cssRule){
       return cssRule
@@ -55,4 +55,4 @@ angular.module('ngMermaid',['ngSanitize'])
         }
       }
     };
-  });
+  }]);

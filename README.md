@@ -18,6 +18,7 @@ bower i ng-mermaid
     <script src="./lib/angular/angular.js"></script>
     <script src="./lib/mermaid/dist/mermaid.full.js"></script>
     <script src="./lib/angular-sanitize/angular-sanitize.js"></script>
+    <script src="./lib/ng-mermaid/dist/ngmermaid.js"></script>
     <script>
         'use strict';
         var myApp = angular.module('exampleapp',['ngMermaid']);
