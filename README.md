@@ -5,6 +5,10 @@ AngularJS mermaid module
 ### [mermaid](https://github.com/knsv/mermaid)
 
 
+## [example page](http://msakamaki.github.io/ng-mermaid/)
+
+
+
 ### using
 
 ```

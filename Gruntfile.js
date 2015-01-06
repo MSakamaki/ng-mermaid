@@ -52,6 +52,13 @@ module.exports = function (grunt) {
       }
     },
 
+    'gh-pages': {
+      options: {
+        base: 'examples'
+      },
+      src: ['**']
+    },
+
     copy: {
       dist: {
         files: [{
@@ -100,6 +107,12 @@ module.exports = function (grunt) {
     'uglify'
   ]);
 
+  grunt.registerTask('ghpage', [
+    'karma:unit',
+    'copy:dist',
+    'copy:example',
+    'gh-pages'
+  ]);
 
   grunt.registerTask('serve', [
     'copy:example',

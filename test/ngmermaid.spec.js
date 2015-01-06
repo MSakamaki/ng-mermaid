@@ -23,10 +23,6 @@ describe('Directive: ngMermaid', function () {
     q=$q;
     timeout=$timeout;
   }));
-//<div class="ng-scope ng-isolate-scope">
-//  <ng-transclude ng-show="false"></ng-transclude>
-//  <div class="{{is_mermaid}} ng-binding" ng-bind-html="model"></div>
-//</div>'
   describe('check compile', function(){
     it('Tag is empty', inject(function ($compile) {
       element = angular.element('<ng-mermaid></ng-mermaid>');
