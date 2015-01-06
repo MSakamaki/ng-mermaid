@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ngMermaid',['ngSanitize'])
-  .directive('ngMermaid', ['$sce','$timeout', function ($sce, $timeout) {
+  .directive('ngMermaid', ['$timeout', function ($timeout) {
     //alert('init ngmermaid');
     var cssReplace = function(cssRule){
       return cssRule
