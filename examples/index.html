@@ -11,8 +11,9 @@
         <h1>hello angular mermaid !</h1>
 
         <div ng-controller="ctrls">
+            <label>refresh intaval time (ms) : <input ng-model="interval"></label>
             <textarea ng-model="mymodel" style="width:100%;" rows="10"></textarea> 
-            <ng-mermaid nm-model="mymodel" ></ng-mermaid>
+            <ng-mermaid nm-model="mymodel" nm-refreshinterval="interval" ></ng-mermaid>
         </div>
 
         <div>
@@ -47,6 +48,7 @@ sequenceDiagram
         var myApp = angular.module('exampleapp',['ngMermaid','ngSanitize']);
         myApp.controller('ctrls', ['$scope', function($scope) {
             $scope.mymodel ='graph TD;\n  S-->B;\n  S-->C;\n  B-->D;\n  C-->D;';
+            $scope.interval = 500;
         }]);
     </script>
     <script src="./ngmermaid.js"></script>

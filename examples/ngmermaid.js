@@ -2,9 +2,9 @@
 
 angular.module('ngMermaid',['ngSanitize'])
   .directive('ngMermaid', ['$timeout', function ($timeout) {
-    //alert('init ngmermaid');
-    var cssReplace = function(cssRule){
-      return cssRule
+    var interval=2000,
+      cssReplace = function(cssRule){
+        return cssRule
             .replace('ng\:cloak','ng--cloak')
             .replace('ng\:form','ng--form');
       },
@@ -25,7 +25,8 @@ angular.module('ngMermaid',['ngSanitize'])
                    '<div class="{{is_mermaid}}" ng-bind-html="model"></div>'+
                 '</div>',
       scope: {
-        nmModel: '=nmModel'
+        nmModel: '=nmModel',
+        nmRefreshinterval: '=nmRefreshinterval'
       },
       compile: function(tElement, tAttrs, transclude){
         // angularjs ng:xxx style escape 
@@ -38,18 +39,24 @@ angular.module('ngMermaid',['ngSanitize'])
             }
           }
         }
+
         return function (scope, element, attrs, ctrl) {
           scope.model=scope.nmModel || element.text();
-          
+          scope.interval = scope.nmRefreshinterval || interval;
           scope.is_mermaid = 'mermaid';
           if(scope.nmModel){
-            scope.$watch('nmModel',function(){
-                scope.model = scope.nmModel;
-                angular.forEach(element[0].querySelectorAll("[data-processed]"),
-                  function(v,k){
-                    v.removeAttribute("data-processed");
-                  });
-                $timeout(mminit,2000);
+            scope.$watch('nmModel', function(){
+              scope.model = scope.nmModel;
+              angular.forEach(element[0].querySelectorAll("[data-processed]"),
+                function(v,k){
+                  v.removeAttribute("data-processed");
+                });
+              $timeout(mminit, scope.interval);
+            });
+          }
+          if(scope.nmRefreshinterval){
+            scope.$watch('nmRefreshinterval',function(){
+              scope.interval = scope.nmRefreshinterval || scope.interval;
             });
           }
         }

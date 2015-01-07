@@ -9,10 +9,10 @@ AngularJS mermaid module
 
 
 
-### using
+### install
 
 ```
-bower i ng-mermaid
+bower install ng-mermaid
 ```
 
 #### include
@@ -30,14 +30,14 @@ bower i ng-mermaid
 
 ```
 
-### exapmle
+### using
 
 #### binding case
 
 ```html
         <div ng-controller="ctrls">
             <textarea ng-model="mymodel" style="width:100%;" rows="10"></textarea> 
-            <ng-mermaid nm-model="mymodel" ></ng-mermaid>
+            <ng-mermaid nm-model="mymodel" nm-refreshinterval="1000"></ng-mermaid>
         </div>
 ```
 
