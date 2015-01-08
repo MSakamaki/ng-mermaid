@@ -4,39 +4,97 @@
     <meta charset="UTF-8">
     <title>ngmermaid</title>
     <link rel="stylesheet" href="./lib/angular/angular-csp.css" type="text/css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js" ></script>
     <style></style>
 </head>
 <body ng-app="exampleapp">
     <section>
         <h1>hello angular mermaid !</h1>
 
+
+        <p><h2>data binding sample</h2>
         <div ng-controller="ctrls">
             <label>refresh intaval time (ms) : <input ng-model="interval"></label>
             <textarea ng-model="mymodel" style="width:100%;" rows="10"></textarea> 
             <ng-mermaid nm-model="mymodel" nm-refreshinterval="interval" ></ng-mermaid>
         </div>
+<br>
+<pre><code class="language-markup">
+&lt;div ng-controller="ctrls">
+    &lt;label>refresh intaval time (ms) : &lt;input ng-model="interval">&lt;/label>
+    &lt;textarea ng-model="mymodel" style="width:100%;" rows="10">&lt;/textarea> 
+    &lt;ng-mermaid nm-model="mymodel" nm-refreshinterval="interval" >&lt;/ng-mermaid>
+&lt;/div>
+&lt;script>
+    'use strict';
+    var myApp = angular.module('exampleapp',['ngMermaid','ngSanitize']);
+    myApp.controller('ctrls', ['$scope', function($scope) {
+        $scope.mymodel ='graph TD;\n  S-->B;\n  S-->C;\n  B-->D;\n  C-->D;';
+        $scope.interval = 500;
+    }]);
+&lt;/script>
+</code></pre>
 
-        <div>
-            <ng-mermaid>
-graph TD; A-->B; A-->C; B-->D; C-->D;
-            </ng-mermaid>
-        </div>
+<p><h2>inner text sample</h2>
 
-        <div>
+<table>
+    <tr>
+        <td>
+<pre><code class="language-markup">
+    &lt;ng-mermaid>
+        graph TD;
+            A-->B;
+            A-->C;
+            B-->D;
+            C-->D;
+    &lt;/ng-mermaid>
+</code></pre>
+        </td>
+        <td>
             <ng-mermaid>
-sequenceDiagram
-    participant Alice
-    participant Bob
-    Alice->John: Hello John, how are you?
-    loop Healthcheck
-        John->John: Fight against hypochondria
-    end
-    Note right of John: Rational thoughts <br/>prevail...
-    John-->Alice: Great!
-    John->Bob: How about you?
-    Bob-->John: Jolly good!
+                graph TD; A-->B; A-->C; B-->D; C-->D;
             </ng-mermaid>
-        </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+<pre><code class="language-markup">
+    &lt;ng-mermaid>
+        sequenceDiagram
+            participant Alice
+            participant Bob
+            Alice->John: Hello John, how are you?
+            loop Healthcheck
+                John->John: Fight against hypochondria
+            end
+            Note right of John: Rational thoughts &lt;br/>prevail...
+            John-->Alice: Great!
+            John->Bob: How about you?
+            Bob-->John: Jolly good!
+    &lt;/ng-mermaid>
+</code></pre>
+        </td>
+        <td>
+            <ng-mermaid>
+            sequenceDiagram
+                participant Alice
+                participant Bob
+                Alice->John: Hello John, how are you?
+                loop Healthcheck
+                    John->John: Fight against hypochondria
+                end
+                Note right of John: Rational thoughts <br/>prevail...
+                John-->Alice: Great!
+                John->Bob: How about you?
+                Bob-->John: Jolly good!
+            </ng-mermaid>
+        </td>
+    </tr>
+</table>
+
+
+
 
     </section>
 

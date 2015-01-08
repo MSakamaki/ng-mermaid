@@ -5,8 +5,7 @@ AngularJS mermaid module
 ### [mermaid](https://github.com/knsv/mermaid)
 
 
-## [example page](http://msakamaki.github.io/ng-mermaid/)
-
+ + [Demo page](http://msakamaki.github.io/ng-mermaid/)
 
 
 ### install
@@ -35,19 +34,19 @@ bower install ng-mermaid
 #### binding case
 
 ```html
-        <div ng-controller="ctrls">
-            <textarea ng-model="mymodel" style="width:100%;" rows="10"></textarea> 
-            <ng-mermaid nm-model="mymodel" nm-refreshinterval="1000"></ng-mermaid>
-        </div>
+    <div ng-controller="ctrls">
+        <textarea ng-model="mymodel" style="width:100%;" rows="10"></textarea> 
+        <ng-mermaid nm-model="mymodel" nm-refreshinterval="1000"></ng-mermaid>
+    </div>
 ```
 
 #### tag case
 
 ```html
-        <div>
-            <ng-mermaid>
-                graph TD; A-->B; A-->C; B-->D; C-->D;
-            </ng-mermaid>
-        </div>
+    <div>
+        <ng-mermaid>
+            graph TD; A-->B; A-->C; B-->D; C-->D;
+        </ng-mermaid>
+    </div>
 ```
 
