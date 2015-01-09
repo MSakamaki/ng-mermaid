@@ -6,19 +6,30 @@
     <link rel="stylesheet" href="./lib/angular/angular-csp.css" type="text/css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js" ></script>
-    <style></style>
+    <style>
+        .ace_editor {
+            height: 200px;
+        }
+    </style>
 </head>
 <body ng-app="exampleapp">
     <section>
         <h1>hello angular mermaid !</h1>
 
-
         <p><h2>data binding sample</h2>
         <div ng-controller="ctrls">
+            <div id="candiv"></div>
             <label>refresh intaval time (ms) : <input ng-model="interval"></label>
-            <textarea ng-model="mymodel" style="width:100%;" rows="10"></textarea> 
-            <ng-mermaid nm-model="mymodel" nm-refreshinterval="interval" ></ng-mermaid>
+            <button ng-click="download()">Download Link Create</button> --> 
+            <a id="donloadcanvas" download="ng-mermaid.png">File Download Link</a>
+
+            <p><div ui-ace ng-model="mymodel"></div>
+            <ng-mermaid nm-model="mymodel"
+                        nm-refreshinterval="interval"></ng-mermaid>
+
+
         </div>
+
 <br>
 <pre><code class="language-markup">
 &lt;div ng-controller="ctrls">
@@ -100,16 +111,77 @@
 
     <script src="./lib/angular/angular.js"></script>
     <script src="./lib/mermaid/dist/mermaid.full.js"></script>
-    <script src="./lib/angular-sanitize/angular-sanitize.js"></script>
+    <script src="./lib/angular-sanitize/angular-sanitize.js"></script>    
+    <!-- ace editer -->
+    <script type="text/javascript" src="./lib/ace-builds/src/ace.js"></script>
+    <script type="text/javascript" src="./lib/angular-ui-ace/ui-ace.js"></script>
     <script>
         'use strict';
-        var myApp = angular.module('exampleapp',['ngMermaid','ngSanitize']);
+        var myApp = angular.module('exampleapp',['ngMermaid','ngSanitize','ui.ace' ]);
         myApp.controller('ctrls', ['$scope', function($scope) {
-            $scope.mymodel ='graph TD;\n  S-->B;\n  S-->C;\n  B-->D;\n  C-->D;';
+            
+            $scope.mymodel ='graph TD;\n  S(ngMermaid)-->|Using|B{Bobson};\n  S-->|Converting|C((circlea));\n  B-->|A|D[html5 canvas download image];\n  C-->|Debuging|D;';
+            //$scope.mymodel ='graph TD;\nS(ngMermaid)-->|Using|B{Bobson};\nS-->|Converting|C((circlea));\nB-->|A|D[html5 canvas download image];\nC-->|Debuging|D;\nc1((x));\nc2((xxx));\nc3((xxxxxx));\nc4((xxxxxxxxx));\nc5((xxxxxxxxxxxx));\nc6((xxxxxxxxxxxxxxx));\nc7((xxxxxxxxxxxxxxxxxx));\nc8((xxxxxxxxxxxxxxxxxxxxx));\nc((Circle))-->c1;\nc-->c2;\nc-->c3;\nc-->c4;\nc-->c5;\nc-->c6;\nc-->c7;\nc-->c8;\nr1{x};\nr2{xxx};\nr3{xxxxxx};\nr4{xxxxxxxxx};\nr5{xxxxxxxxxxxx};\nr6{xxxxxxxxxxxxxxx};\nr7{xxxxxxxxxxxxxxxxxx};\nr8{xxxxxxxxxxxxxxxxxxxxx};\nr{rhombus}-->r1;\nr-->r2;\nr-->r3;\nr-->r4;\nr-->r5;\nr-->r6;\nr-->r7;\nr-->r8;\nas1>x];\nas2>xxx];\nas3>xxxxxx];\nas4>xxxxxxxxx];\nas5>xxxxxxxxxxxx];\nas6>xxxxxxxxxxxxxxx];\nas7>xxxxxxxxxxxxxxxxxx];\nas8>xxxxxxxxxxxxxxxxxxxxx];\nas>asymetric shape]-->as1;\nas-->as2;\nas-->as3;\nas-->as4;\nas-->as5;\nas-->as6;\nas-->as7;\nas-->as8;\n';
             $scope.interval = 500;
+
+
+            $scope.download = function(){
+                var divs = document.getElementsByClassName('mermaid')[0].querySelectorAll('div');
+                for(var idx in divs) {
+                    if (divs[idx].parentElement)
+                        if (divs[idx].parentElement.tagName === 'foreignObject'){
+                            divs[idx].setAttribute("xmlns", 'http://www.w3.org/1999/xhtml');
+                            divs[idx].style.fontSize = '16px';
+                        }
+                }
+
+                var nodes = document.getElementsByClassName('mermaid')[0].querySelectorAll('.node');
+                for (var i in nodes){
+                    if (!nodes[i].querySelector) continue;
+
+                    var text = document.createElement("text")
+                    text.innerText= nodes[i].querySelector('div').innerText;
+                    /*
+                    if (nodes[i].childNodes[0].nodeName === 'polygon') {
+                        text.setAttribute('x',
+                            -(Number(nodes[i].childNodes[1].querySelector('div')
+                                .parentElement.getAttribute('width'))/2));
+                    }else{
+                        text.setAttribute('x',Number(nodes[i].childNodes[0].getAttribute('x')) +10);
+                        text.setAttribute('y',Number(nodes[i].childNodes[0].getAttribute('y')) +25);
+                    }*/
+
+                    //text.setAttribute('font-family','serif')
+                    text.setAttribute('dy',20);
+                    text.setAttribute('font-size','16px')
+
+                    nodes[i].childNodes[1].childNodes[0].appendChild(text);
+                }
+
+                var edgeLabels = document.getElementsByClassName('mermaid')[0].querySelectorAll('.edgeLabel');
+                for(var i in edgeLabels){
+                    if (!edgeLabels[i].querySelector) continue;
+                    var text = document.createElement("text")
+                    text.innerText= edgeLabels[i].querySelector('div > span').innerText;
+                    edgeLabels[i].childNodes[0].appendChild(text);
+                }
+
+                var canvas =document.createElement("canvas");
+                canvg(canvas, document.getElementsByClassName('mermaid')[0].innerHTML);
+                var alink = document.getElementById("donloadcanvas");
+                alink.href = canvas.toDataURL("image/png");
+
+                //var canvasDiv = document.getElementById("candiv"); // debug views
+                //canvasDiv.appendChild(canvas);
+            };
         }]);
     </script>
     <script src="./ngmermaid.js"></script>
     <script src="//localhost:9001/livereload.js"></script>
+
+    <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script>
+    <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/StackBlur.js"></script>
+    <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script>
+
 </body>
 </html>
