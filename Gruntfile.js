@@ -13,7 +13,8 @@ module.exports = function (grunt) {
     app: 'examples',
     src: 'src',
     dist: 'dist',
-    extension: 'js',
+    bower: 'source',
+    extension: '{js,css}',
   };
 
   grunt.initConfig({
@@ -81,6 +82,17 @@ module.exports = function (grunt) {
             '{,**/}*.<%= yeoman.extension %>'
           ]
         }]
+      },
+      bower: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.bower %>',
+          dest: '<%= yeoman.app %>/lib',
+          src: [
+            '{,**/}*.<%= yeoman.extension %>'
+          ]
+        }]
       }
     },
 
@@ -104,18 +116,20 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'karma:unit',
     'copy:dist',
-    'uglify'
+    //'uglify'
   ]);
 
   grunt.registerTask('ghpage', [
     'karma:unit',
     'copy:dist',
     'copy:example',
+    'copy:bower',
     'gh-pages'
   ]);
 
   grunt.registerTask('serve', [
     'copy:example',
+    'copy:bower',
     'connect:livereload',
     'watch'
   ]);

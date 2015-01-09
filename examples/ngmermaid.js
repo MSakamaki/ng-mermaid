@@ -7,13 +7,6 @@ angular.module('ngMermaid',['ngSanitize'])
         return cssRule
             .replace('ng\:cloak','ng--cloak')
             .replace('ng\:form','ng--form');
-      },
-      mminit = function(){
-        try{
-          mermaid.init();
-        }catch(e){
-          return e;
-        }
       };
 
     return {
@@ -22,7 +15,8 @@ angular.module('ngMermaid',['ngSanitize'])
       replace: true,
       template: '<div>'+
                    '<ng-transclude ng-show="false"></ng-transclude>'+
-                   '<div class="{{is_mermaid}}" ng-bind-html="model"></div>'+
+                   '<div ng-hide="mermaiderror" class="{{is_mermaid}}" ng-bind-html="model"></div>'+
+                   '<span ng-show="mermaiderror" ng-bind-html="mermaiderror"></span>'+
                 '</div>',
       scope: {
         nmModel: '=nmModel',
@@ -51,7 +45,16 @@ angular.module('ngMermaid',['ngSanitize'])
                 function(v,k){
                   v.removeAttribute("data-processed");
                 });
-              $timeout(mminit, scope.interval);
+              $timeout(function(){
+                scope.mermaiderror='';
+                try{
+                  mermaid.init();
+                }catch(e){
+                  angular.forEach(e.message.split('\n'), function(v){
+                    scope.mermaiderror += '<span>' + v + '</span><br/>';
+                  });
+                }
+              }, scope.interval);
             });
           }
           if(scope.nmRefreshinterval){
