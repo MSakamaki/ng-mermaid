@@ -1,6 +1,7 @@
 AngularJS mermaid module
 ======
 
+[![Build Status](https://travis-ci.org/MSakamaki/ng-mermaid.svg?branch=master)](https://travis-ci.org/MSakamaki/ng-mermaid)
 
 ### [mermaid](https://github.com/knsv/mermaid)
 
