@@ -20,5 +20,8 @@
     "karma-safari-launcher": "^0.1.1",
     "load-grunt-tasks": "~0.4.0",
     "mocha": "^2.1.0"
+  },
+  "scripts": {
+    "test": "grunt"
   }
 }
