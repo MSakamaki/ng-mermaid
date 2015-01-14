@@ -13,6 +13,7 @@
     </style>
 </head>
 <body ng-app="exampleapp">
+    <img src="https://travis-ci.org/MSakamaki/ng-mermaid.svg?branch=master" />
     <section>
         <h1>hello angular mermaid !</h1>
 
@@ -26,7 +27,6 @@
             <p><div ui-ace ng-model="mymodel"></div>
             <ng-mermaid nm-model="mymodel"
                         nm-refreshinterval="interval"></ng-mermaid>
-
 
         </div>
 
@@ -104,9 +104,6 @@
     </tr>
 </table>
 
-
-
-
     </section>
 
     <script src="./lib/angular/angular.js"></script>
@@ -141,17 +138,6 @@
 
                     var text = document.createElement("text")
                     text.innerText= nodes[i].querySelector('div').innerText;
-                    /*
-                    if (nodes[i].childNodes[0].nodeName === 'polygon') {
-                        text.setAttribute('x',
-                            -(Number(nodes[i].childNodes[1].querySelector('div')
-                                .parentElement.getAttribute('width'))/2));
-                    }else{
-                        text.setAttribute('x',Number(nodes[i].childNodes[0].getAttribute('x')) +10);
-                        text.setAttribute('y',Number(nodes[i].childNodes[0].getAttribute('y')) +25);
-                    }*/
-
-                    //text.setAttribute('font-family','serif')
                     text.setAttribute('dy',20);
                     text.setAttribute('font-size','16px')
 
