@@ -20,7 +20,8 @@ angular.module('ngMermaid',['ngSanitize'])
                 '</div>',
       scope: {
         nmModel: '=nmModel',
-        nmRefreshinterval: '=nmRefreshinterval'
+        nmRefreshinterval: '=nmRefreshinterval',
+        nmInitCallback: '&nmInitCallback'
       },
       compile: function(tElement, tAttrs, transclude){
         // angularjs ng:xxx style escape 
@@ -35,6 +36,7 @@ angular.module('ngMermaid',['ngSanitize'])
         }
 
         return function (scope, element, attrs, ctrl) {
+        	
           scope.model=scope.nmModel || element.text();
           scope.interval = scope.nmRefreshinterval || interval;
           scope.is_mermaid = 'mermaid';
@@ -49,6 +51,7 @@ angular.module('ngMermaid',['ngSanitize'])
                 scope.mermaiderror='';
                 try{
                   mermaid.init();
+                  scope.nmInitCallback()();
                 }catch(e){
                   angular.forEach(e.message.split('\n'), function(v){
                     scope.mermaiderror += '<span>' + v + '</span><br/>';
