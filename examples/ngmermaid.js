@@ -51,7 +51,8 @@ angular.module('ngMermaid',['ngSanitize'])
                 scope.mermaiderror='';
                 try{
                   mermaid.init();
-                  scope.nmInitCallback()();
+                  if (angular.isFunction(scope.nmInitCallback()))
+                    scope.nmInitCallback()();
                 }catch(e){
                   angular.forEach(e.message.split('\n'), function(v){
                     scope.mermaiderror += '<span>' + v + '</span><br/>';
