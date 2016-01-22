@@ -47,7 +47,9 @@ angular.module('ngMermaid',['ngSanitize'])
                 function(v,k){
                   v.removeAttribute("data-processed");
                 });
-              $timeout(function(){
+              if (scope.timeout)
+            	  $timeout.cancel(scope.timeout);
+              scope.timeout = $timeout(function(){
                 scope.mermaiderror='';
                 try{
                   mermaid.init();
